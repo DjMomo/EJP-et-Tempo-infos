@@ -10,16 +10,22 @@
 **
 **************************************************************************************/
 
-// URL de la page à parser
-$URL = "http://particuliers.edf.com/gestion-de-mon-contrat/options-tempo-et-ejp/option-ejp/l-observatoire-2584.html";
+// URL des pages à parser
+$URL_obs = "http://particuliers.edf.com/gestion-de-mon-contrat/options-tempo-et-ejp/option-ejp/l-observatoire-2584.html";
+$URL_histo = "http://edf-ejp-tempo.sfr-sh.fr/index.php?m=eh";
 
 // Ordre des zones sur la page
 $zones = array("nord","paca","ouest","sud");
 
 // Extraction des données
-$page = file_get_contents($URL);
+// Etat EJP
+$page = file_get_contents($URL_obs);
 preg_match_all("/(.*)FRONT\/NetExpress\/img\/ejp_(.*).png(.*)/", $page, $matches);
 $ejp = $matches[2];
+// Nombre de jours restants
+$page = file_get_contents($URL_histo);
+preg_match_all("/(.*)<td(.*)>(.*)<\/td>(.*)/", $page, $matches);
+$ejp_jours = $matches[3];
 
 // Création données XML
 // Instance de la class DomDocument
@@ -31,7 +37,7 @@ $doc->encoding = 'UTF-8';
 $doc->formatOutput = true;
 
 // Ajout d'un commentaire a la racine
-$comment_elt = $doc->createComment(utf8_encode('Etat des zones EJP pour aujourdhui et demain'));
+$comment_elt = $doc->createComment(utf8_encode('Etat des zones EJP pour aujourdhui, demain et nombre de jours restants'));
 $doc->appendChild($comment_elt);
 
 // Création noeud principal
@@ -44,12 +50,15 @@ $racine->appendChild($version_elt);
 for($i = 0;$i<sizeof($zones); $i++)
 {
 	$j = $i+7;
+	$n = $i+1;
 	// Zones
 	$zone = $doc->createElement($zones[$i]);
 	$aujourdhui = $doc->createElement('aujourdhui', $ejp[$i]);
 	$demain = $doc->createElement('demain', $ejp[$j]);
+	$jours_restants = $doc->createElement('jours_restants', $ejp_jours[$n]);
 	$zone->appendChild($aujourdhui);
 	$zone->appendChild($demain);
+	$zone->appendChild($jours_restants);
 	$racine->appendChild($zone);
 }
 
