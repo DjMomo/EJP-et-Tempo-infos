@@ -3,21 +3,21 @@
 **												
 ** Script "EJP vers XML"
 **
-** Script qui retourne dans des donnnées XML l'état des 4 zones EJP pour le jour courant
-** et le lendemain
+** Script qui retourne dans des donnnï¿½es XML l'ï¿½tat des 4 zones EJP pour le jour courant
+** et le lendemain, ainsi que le nombre de jours EJP restant
 **												
 ** DjMomo - http://www.github.com/DjMomo/EJP_to_XML/
 **
 **************************************************************************************/
 
-// URL des pages à parser
+// URL des pages ï¿½ parser
 $URL_obs = "http://particuliers.edf.com/gestion-de-mon-contrat/options-tempo-et-ejp/option-ejp/l-observatoire-2584.html";
 $URL_histo = "http://edf-ejp-tempo.sfr-sh.fr/index.php?m=eh";
 
 // Ordre des zones sur la page
 $zones = array("nord","paca","ouest","sud");
 
-// Extraction des données
+// Extraction des donnï¿½es
 // Etat EJP
 $page = file_get_contents($URL_obs);
 preg_match_all("/(.*)FRONT\/NetExpress\/img\/ejp_(.*).png(.*)/", $page, $matches);
@@ -27,7 +27,7 @@ $page = file_get_contents($URL_histo);
 preg_match_all("/(.*)<td(.*)>(.*)<\/td>(.*)/", $page, $matches);
 $ejp_jours = $matches[3];
 
-// Création données XML
+// Crï¿½ation donnï¿½es XML
 // Instance de la class DomDocument
 $doc = new DOMDocument();
 
@@ -40,7 +40,7 @@ $doc->formatOutput = true;
 $comment_elt = $doc->createComment(utf8_encode('Etat des zones EJP pour aujourdhui, demain et nombre de jours restants'));
 $doc->appendChild($comment_elt);
 
-// Création noeud principal
+// Crï¿½ation noeud principal
 $racine = $doc->createElement('ejp');
 
 // Ajout la balise 'update' a la racine
