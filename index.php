@@ -67,6 +67,7 @@ $racine = $doc->createElement('ejp_tempo');
 // Ajout la balise 'update' a la racine
 $version_elt = $doc->createElement('update',date("Y-m-d H:i"));
 $racine->appendChild($version_elt);
+$ejp_XML = $doc->createElement('ejp');
 
 // Données EJP
 for($i = 0;$i<sizeof($zones); $i++)
@@ -81,8 +82,9 @@ for($i = 0;$i<sizeof($zones); $i++)
 	$zone->appendChild($aujourdhui);
 	$zone->appendChild($demain);
 	$zone->appendChild($jours_restants);
-	$racine->appendChild($zone);
+	$ejp_XML->appendChild($zone);
 }
+$racine->appendChild($ejp_XML);
 
 // Données TEMPO
 $tempo = $doc->createElement('tempo');
