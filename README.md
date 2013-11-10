@@ -15,6 +15,6 @@ Configuration :
 Aucune
 
 ==========
-How to use :
+Utilisation :
 
-Call index.php
+Appeler index.php, retourne des données XML.
