@@ -77,10 +77,16 @@ for($i = 0;$i<sizeof($zones); $i++)
 	// Zones
 	$zone = $doc->createElement($zones[$i]);
 	$aujourdhui = $doc->createElement('aujourdhui', $ejp[$i]);
+	($ejp[$i] === "oui") ? $bool = 1 : $bool = 0;
+	$aujourdhui_bool = $doc->createElement('aujourdhui_bool', $bool);
 	$demain = $doc->createElement('demain', $ejp[$j]);
+	($ejp[$j] === "oui") ? $bool = 1 : $bool = 0;
+	$demain_bool = $doc->createElement('demain_bool', $bool);
 	$jours_restants = $doc->createElement('jours_restants', $ejp_jours[$i]);
 	$zone->appendChild($aujourdhui);
+	$zone->appendChild($aujourdhui_bool);
 	$zone->appendChild($demain);
+	$zone->appendChild($demain_bool);
 	$zone->appendChild($jours_restants);
 	$ejp_XML->appendChild($zone);
 }
