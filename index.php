@@ -5,10 +5,10 @@
 **
 ** Script qui retourne dans des donnnées XML l'état des 4 zones EJP pour le jour courant
 ** et le lendemain, ainsi que le nombre de jours EJP restant.
-** 10/11/13 : Retourne désormais les couleurs TEMPO pour le jour courant et le 
-** lendemain et le nombre restant pour chacune d'elle.
+** Retourne aussi les couleurs TEMPO pour le jour courant et le lendemain ainsi que
+** le nombre de jours restants pour chacune d'elle.
 **												
-** DjMomo - http://www.github.com/DjMomo/EJP_to_XML/
+** DjMomo - http://www.github.com/DjMomo/EJP-et-Tempo-infos/
 **
 **************************************************************************************/
 
@@ -77,10 +77,20 @@ for($i = 0;$i<sizeof($zones); $i++)
 	// Zones
 	$zone = $doc->createElement($zones[$i]);
 	$aujourdhui = $doc->createElement('aujourdhui', $ejp[$i]);
-	($ejp[$i] === "oui") ? $bool = 1 : $bool = 0;
+	if ($ejp[$i] === "oui") 
+		$bool = 1;
+	elseif ($ejp[$i] === "non") 
+		$bool = 0;
+	else
+		$bool = "";
 	$aujourdhui_bool = $doc->createElement('aujourdhui_bool', $bool);
 	$demain = $doc->createElement('demain', $ejp[$j]);
-	($ejp[$j] === "oui") ? $bool = 1 : $bool = 0;
+	if ($ejp[$j] === "oui") 
+		$bool = 1;
+	elseif ($ejp[$j] === "non") 
+		$bool = 0;
+	else
+		$bool = "";
 	$demain_bool = $doc->createElement('demain_bool', $bool);
 	$jours_restants = $doc->createElement('jours_restants', $ejp_jours[$i]);
 	$zone->appendChild($aujourdhui);
@@ -112,6 +122,7 @@ $racine->appendChild($tempo);
 $doc->appendChild($racine);
 
 // Affichage XML
+header("Content-type: text/xml; charset=utf-8");
 echo $doc->saveXML();
 
 ?>
