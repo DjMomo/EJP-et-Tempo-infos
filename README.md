@@ -7,6 +7,7 @@ https://github.com/DjMomo/EJP-et-Tempo-infos
 
 Evolutions :
 ------------
+* 2014-10-23 - V1.4 - Fix d'un problème de formatage du XML pouvant survenir dans certain cas
 * 2014-03-05 - V1.3 - Fix dans le cas où aucun état EJP n'est renvoyé.
 					- Amélioration du format XML dans les entêtes HTTP en sortie.
 					- Projet renommé en EJP-et-Tempo-infos.
