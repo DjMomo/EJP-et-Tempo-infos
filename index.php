@@ -82,7 +82,7 @@ for($i = 0;$i<sizeof($zones); $i++)
 	elseif ($ejp[$i] === "non") 
 		$bool = 0;
 	else
-		$bool = "";
+		$bool = "nd";
 	$aujourdhui_bool = $doc->createElement('aujourdhui_bool', $bool);
 	$demain = $doc->createElement('demain', $ejp[$j]);
 	if ($ejp[$j] === "oui") 
@@ -90,7 +90,7 @@ for($i = 0;$i<sizeof($zones); $i++)
 	elseif ($ejp[$j] === "non") 
 		$bool = 0;
 	else
-		$bool = "";
+		$bool = "nd";
 	$demain_bool = $doc->createElement('demain_bool', $bool);
 	$jours_restants = $doc->createElement('jours_restants', $ejp_jours[$i]);
 	$zone->appendChild($aujourdhui);
